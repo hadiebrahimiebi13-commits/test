@@ -1,1 +1,27 @@
+# Node
 node_modules
+
+# Next.js build output
+.next
+
+# Turbo cache
+.turbo
+
+# Local environment files
+.env
+**/.env
+
+# SQLite DBs and other local DB files
+*.db
+**/*.db
+
+# Build output
+dist
+
+# Editor/OS files
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
