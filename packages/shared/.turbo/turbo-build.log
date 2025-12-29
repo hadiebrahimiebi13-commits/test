@@ -1,4 +1,0 @@
-
-> @shared@0.1.0 build /workspaces/test/packages/shared
-> tsc -p .
-
