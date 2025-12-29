@@ -1,0 +1,11 @@
+{
+  "pipeline": {
+    "dev": {
+      "outputs": [],
+      "cache": false
+    },
+    "build": {},
+    "lint": {},
+    "format": {}
+  }
+}

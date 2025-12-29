@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Node {
+  id        String   @id @default(cuid())
+  title     String
+  description String?
+  icon      String?
+  slug      String   @unique
+  parentId  String?  
+  path      String   // materialized path: /root/child/
+  position  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([parentId])
+  @@index([path])
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  role      String   @default("ADMIN")
+  name      String?
+  bio       String?
+  createdAt DateTime @default(now())
+}
+
+model PatientCase {
+  id           String         @id @default(cuid())
+  title        String
+  description  String?
+  finalDiagnosis String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  images       CaseImage[]
+  questions    CaseQuestion[]
+}
+
+model CaseImage {
+  id        String      @id @default(cuid())
+  caseId    String
+  url       String
+  caption   String?
+  patientCase PatientCase @relation(fields: [caseId], references: [id])
+}
+
+model CaseQuestion {
+  id          String      @id @default(cuid())
+  caseId      String
+  prompt      String
+  options     String
+  correctIndex Int?
+  explanation String?
+  order       Int         @default(0)
+  patientCase PatientCase @relation(fields: [caseId], references: [id])
+}
+
+model UserResponse {
+  id           String   @id @default(cuid())
+  userId       String?  // optional external user id (not enforced as FK)
+  caseId       String
+  questionId   String
+  selectedIndex Int
+  correct      Boolean
+  createdAt    DateTime @default(now())
+}
+
