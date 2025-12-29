@@ -13,7 +13,8 @@ describe('tree operations', () => {
     const b = await prisma.node.create({ data: { title: 'B', slug: 'b', parentId: a.id, path: '/a/b/', position: 0 } });
     // attempt to move A under B should be prevented by business logic, but here we replicate check
     const isDescendant = (parentPath: string, nodePath: string) => parentPath.startsWith(nodePath);
-    expect(isDescendant(b.path, a.path)).toBe(false);
+    // b.path is a descendant of a.path so this should be true
+    expect(isDescendant(b.path, a.path)).toBe(true);
   });
 
   it('orders siblings', async () => {
